@@ -13,17 +13,17 @@ export default function Header(){
                         </a>
                     </li>
                     <li>
-                        <a href="#about" className='hover:underline'>
+                        <a href="#about" className='hover:animate-bounce hover:underline decoration-blue-500 decoration-3 decoration-wavy'>
                             About
                         </a>
                     </li>
                     <li>
-                        <a href="#project" className='hover:underline'>
+                        <a href="#project" className='hover:animate-bounce hover:underline decoration-blue-500 decoration-3 decoration-wavy'>
                             Project
                         </a>
                     </li>
                     <li>
-                        <a href="#contact" className='hover:underline'>
+                        <a href="#contact" className='hover:animate-bounce hover:underline decoration-blue-500 decoration-3 decoration-wavy'>
                             Contact
                         </a>
                     </li>
