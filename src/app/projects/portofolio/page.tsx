@@ -58,7 +58,7 @@ export default function Home(){
                 <div className="flex flex-wrap justify-center items-center w-full gap-6">
                     <img className="relative z-10  drop-shadow-xl w-[30rem] h-[20rem] md:w-[32rem] md:h-[26rem] object-contain right-14" src="/image/portofolio/home.png" alt="Your Image" />
                     <img className="relative z-10  drop-shadow-xl w-[30rem] h-[20rem] md:w-[32rem] md:h-[26rem] object-contain right-14" src="/image/portofolio/aboutme.png" alt="Your Image" />
-                    <img className="relative z-10  drop-shadow-xl w-[30rem] h-[20rem] md:w-[32rem] md:h-[26rem] object-contain right-14" src="/image/lapangpedia/project-page.png" alt="Your Image" />
+                    <img className="relative z-10  drop-shadow-xl w-[30rem] h-[20rem] md:w-[32rem] md:h-[26rem] object-contain right-14" src="/image/portofolio/project-page.png" alt="Your Image" />
                 </div>
             </div>
         </main>
