@@ -130,8 +130,8 @@ export default function Home() {
                     </div>
                   </div>
               </div>
-              <div className="flex flex-col items-center  bg-white border border-gray-200 rounded-xl shadow md:flex-row md:max-w-6xl hover:bg-gray-100 md:max-h-96">
-                  {/* <img className="object-cover w-full rounded-t-lg h-full md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="/image/Skeb Media Post copy.jpeg" alt="" /> */}
+              {/* <div className="flex flex-col items-center  bg-white border border-gray-200 rounded-xl shadow md:flex-row md:max-w-6xl hover:bg-gray-100 md:max-h-96">
+                  {/* <img className="object-cover w-full rounded-t-lg h-full md:h-auto md:w-48 md:rounded-none md:rounded-s-lg" src="/image/Skeb Media Post copy.jpeg" alt="" />
                   <div className="flex flex-col justify-between p-4 leading-normal">
                       <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">SIBI Sign Language Translator</h5>
                       <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">This is a project that i worked on that integrates machine learning model using TFLite with Flutter to create a mobile application that is capable to translate SIBI Sign Language Alphabet</p>
@@ -155,7 +155,7 @@ export default function Home() {
                       </div>
                     </div>
                   </div>
-              </div>
+              </div>*/}
             </div>
           </div>
         </div>
