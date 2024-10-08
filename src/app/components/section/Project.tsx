@@ -16,20 +16,16 @@ export default function Project() {
                         <ProjectCard 
                             title={"Portfolio Website"} 
                             description={"This is a portfolio website that I worked on using NextJs, Tailwind, and Flowbit as its tech stack!"} 
-                            githubLink={"https://github.com/EzraArya/portofolio"} 
-                            projectLink={"/projects/portofolio"} 
-                        />
+                            githubLink={"https://github.com/EzraArya/portofolio"}                         />
                         <ProjectCard 
                             title={"LapangPedia"} 
                             description={"This is a project that I worked on with my team, where I'm responsible as a full-stack developer. It's an auction website using Laravel, MySQL, Tailwind, and Bootstrap."} 
                             githubLink={"https://github.com/EzraArya/lapangpedia-web"} 
-                            projectLink={"/projects/lapangpedia"} 
                         />
                         <ProjectCard 
                             title={"Hackathon Website"} 
                             description={"This is a project where I was the back-end developer, configuring the admin role. It's a Hackathon website using Laravel."} 
                             githubLink={"https://github.com/EzraArya/ProjectTpm/"} 
-                            projectLink={"/projects/lapangpedia"} 
                         />
                     </div>
                 </div>
