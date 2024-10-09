@@ -33,6 +33,11 @@ export default function Project() {
                             description={"an iOS Game Catalog that use SwiftUI and Rawg.io API allowing users to see list of games, developers, and creators and add items to the favorites list"} 
                             githubLink={"https://github.com/EzraArya/iOS-GameCatalog"} 
                         />
+                        <ProjectCard 
+                            title={"SIBI Sign Language Translator"} 
+                            description={"a Flutter application that utilize TFLite as the model to translate SIBI Sign Language"} 
+                            githubLink={"https://github.com/EzraArya/SIBI-Translator-Flutter"} 
+                        />
                     </div>
                 </div>
             </div>
