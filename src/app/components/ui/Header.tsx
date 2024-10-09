@@ -10,7 +10,7 @@ export default function Header() {
     };
 
     return (
-        <nav className='flex justify-between m-14 items-center'>
+        <nav className='flex justify-between m-14 items-center sticky top-0 bg-white z-20 h-20'>
             {/* Hamburger Menu Icon for small screens */}
             <div className="lg:hidden" onClick={toggleMenu}>
                 <button className="text-gray-700 hover:text-gray-900 focus:outline-none">

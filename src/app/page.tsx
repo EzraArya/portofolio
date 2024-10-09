@@ -8,6 +8,7 @@ import AboutMe from "./components/section/AboutMe";
 import Project from "./components/section/Project";
 import Landing from "./components/section/Landing";
 import Contact from "./components/section/Contact";
+import Footer from "./components/ui/Footer";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       <AboutMe />
       <Project />
       <Contact />
+      <Footer />
    </main>
   );
 }
