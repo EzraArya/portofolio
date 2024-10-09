@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import  Icon  from "../ui/Icon"; 
 
 export default function Landing() {
     return (
@@ -19,6 +20,14 @@ export default function Landing() {
                 </div>
               </a>
               </button> 
+            </div>
+            <div className="flex flex-row gap-5">
+              <a href="https://github.com/EzraArya">
+                <Image src="github.svg" height={30} width={30} alt={"Linkedin logo"} />
+              </a>
+              <a href="https://www.linkedin.com/in/ezra-wijaya-1506a1248/">
+                <Image src="linkedin.svg" height={30} width={30} alt={"Linkedin logo"} />
+              </a>
             </div>
           </div>
         </div>
