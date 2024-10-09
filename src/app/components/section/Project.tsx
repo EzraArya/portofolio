@@ -12,11 +12,12 @@ export default function Project() {
                     <p className="font-montserrat font-light text-lg sm:text-xl">
                         Here&apos;s a list of projects that I&apos;ve developed throughout my career
                     </p>
-                    <div className="gap-4 flex flex-col w-full">
+                    <div className="grid gap-4 w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
                         <ProjectCard 
                             title={"Portfolio Website"} 
                             description={"This is a portfolio website that I worked on using NextJs, Tailwind, and Flowbit as its tech stack!"} 
-                            githubLink={"https://github.com/EzraArya/portofolio"}                         />
+                            githubLink={"https://github.com/EzraArya/portofolio"} 
+                        />
                         <ProjectCard 
                             title={"LapangPedia"} 
                             description={"This is a project that I worked on with my team, where I'm responsible as a full-stack developer. It's an auction website using Laravel, MySQL, Tailwind, and Bootstrap."} 
@@ -27,9 +28,15 @@ export default function Project() {
                             description={"This is a project where I was the back-end developer, configuring the admin role. It's a Hackathon website using Laravel."} 
                             githubLink={"https://github.com/EzraArya/ProjectTpm/"} 
                         />
+                        <ProjectCard 
+                            title={"iOS Game Catalog"} 
+                            description={"an iOS Game Catalog that use SwiftUI and Rawg.io API allowing users to see list of games, developers, and creators and add items to the favorites list"} 
+                            githubLink={"https://github.com/EzraArya/iOS-GameCatalog"} 
+                        />
                     </div>
                 </div>
             </div>
         </div>
     );
 }
+
