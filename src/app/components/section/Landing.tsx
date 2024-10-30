@@ -11,7 +11,7 @@ export default function Landing() {
             <h1 className="font-montserrat font-bold text-2xl md:text-3xl lg:text-5xl mb-3">a <span className="underline decoration-blue-400 decoration-8">Software Developer</span></h1> 
             <div className="flex justify-center w-full mt-4">
               <button type="button" className="border border-black drop-shadow-lg w-40 h-12 bg-white rounded-2xl hover:bg-gradient-to-t hover:from-gradient-start hover:to-gradient-stop animate-bounce transition duration-350 hover:bg-slate-100">
-              <a href="/resume.pdf" download="resume">
+              <a href="/CV.pdf" download="resume">
                 <div className="text-black font-montserrat font-semibold text-md flex gap-1 items-center justify-center">
                   <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V4M7 14H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2m-1-5-4 5-4-5m9 8h.01"/>
