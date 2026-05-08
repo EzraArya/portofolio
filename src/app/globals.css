@@ -87,10 +87,13 @@
     transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
   }
   
-  /* Ensure border colors also transition smoothly */
-  * {
-    border-color: hsl(var(--border));
-    transition: border-color 0.5s ease-in-out, background-color 0.5s ease-in-out;
+  /* Scoped theme transitions — only on elements that need it */
+  body,
+  nav,
+  [class*="rounded-"],
+  [class*="border-"],
+  [class*="bg-"] {
+    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out;
   }
 
   /* Typography hierarchy — technical heading font, sans for body */

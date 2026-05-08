@@ -27,12 +27,12 @@ export const metadata: Metadata = {
     template: "%s | Ezra Wijaya",
   },
   description:
-    "Aspiring iOS Developer, Backend Developer, and Mobile Developer with a strong foundation in software engineering. Proficient in Swift, SwiftUI, Laravel, and Flutter.",
+    "Software Engineer with proven experience in iOS development. Previously at 99 Group, building high-traffic consumer applications with Swift, SwiftUI, and UIKit.",
   openGraph: {
     title: "Ezra Wijaya — Software Developer",
     description:
-      "Aspiring iOS Developer, Backend Developer, and Mobile Developer with a strong foundation in software engineering.",
-    url: "https://ezrawijaya.dev",
+      "Software Engineer with iOS development experience. Previously at 99 Group, building high-traffic consumer apps with Swift, SwiftUI, and UIKit.",
+    url: "https://ezraarya.vercel.app",
     siteName: "Ezra Wijaya",
     locale: "en_US",
     type: "website",

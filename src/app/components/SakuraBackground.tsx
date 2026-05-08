@@ -75,6 +75,13 @@ export function SakuraBackground() {
     []
   );
 
+  const isDarkRef = useRef(theme === "dark");
+
+  // Keep the ref in sync without re-running the animation effect
+  useEffect(() => {
+    isDarkRef.current = theme === "dark";
+  }, [theme]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -82,7 +89,7 @@ export function SakuraBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const PETAL_COUNT = 70; // increased per user request
+    const PETAL_COUNT = 50; // increased per user request
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -108,8 +115,6 @@ export function SakuraBackground() {
       petal.y = Math.random() * canvas.height;
       petalsRef.current.push(petal);
     }
-
-    const isDark = theme === "dark";
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -147,7 +152,7 @@ export function SakuraBackground() {
           petal.speedY = petal.baseSpeedY;
         }
 
-        drawPetal(ctx, petal, isDark);
+        drawPetal(ctx, petal, isDarkRef.current);
       });
 
       animationRef.current = requestAnimationFrame(animate);
@@ -161,7 +166,7 @@ export function SakuraBackground() {
       document.body.removeEventListener("mouseleave", handleMouseLeave);
       cancelAnimationFrame(animationRef.current);
     };
-  }, [theme, createPetal, drawPetal]);
+  }, [createPetal, drawPetal]);
 
   return (
     <canvas
