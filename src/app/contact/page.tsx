@@ -118,7 +118,7 @@ export default function ContactPage() {
           className="flex items-center gap-2 text-sm text-muted-foreground"
         >
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span>Available for internship opportunities</span>
+          <span>Available for opportunities</span>
         </motion.div>
       </motion.div>
     </main>

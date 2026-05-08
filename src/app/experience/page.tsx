@@ -2,34 +2,45 @@
 
 import { motion } from "framer-motion";
 
-// NOTE: Experience data preserved/adapted from original — may need updating later
-const experiences = [
+const workExperience = [
+  {
+    title: "iOS Engineer Intern",
+    organization: "99 Group (99.co | Rumah123 | SRX)",
+    period: "Feb 2025 - Feb 2026",
+    highlights: [
+      "Maintained and enhanced large-scale production iOS applications using Swift and UIKit, supporting high-traffic property platforms.",
+      "Diagnosed and resolved critical production crashes (concurrency, memory leaks) using Firebase Crashlytics, achieving and sustaining a 99.93% crash-free rate over a quarter.",
+      "Eliminated a backlog of 80+ production support tickets across main and legacy codebases, collaborating with senior engineers to implement safe fixes and maximize release stability.",
+    ],
+  },
+];
+
+const education = [
   {
     title: "Bachelor of Computer Science",
-    organization: "University",
-    period: "Current",
+    organization: "Bina Nusantara University",
+    period: "Expected Sept 2026",
     description:
-      "Focus on Software Engineering, maintaining a 3.79 GPA. Proficient in applying SOLID principles and Agile methodologies to create scalable, maintainable applications.",
-    type: "education" as const,
+      "Streaming in Software Engineering. Cumulative GPA: 3.83/4.0. Thesis defense completed.",
   },
 ];
 
 const skills = [
   {
-    category: "iOS / Mobile",
-    items: ["Swift", "SwiftUI", "UIKit", "Flutter", "Dart"],
+    category: "iOS Development",
+    items: ["Swift", "Objective-C", "UIKit", "SwiftUI", "Core Data", "SPM"],
   },
   {
-    category: "Backend",
-    items: ["PHP", "Laravel", "MySQL", "RESTful APIs"],
+    category: "Architecture & Tools",
+    items: ["MVVM", "Coordinator Pattern", "Combine", "Async/Await", "Unit Testing", "DI"],
   },
   {
-    category: "Frontend",
-    items: ["Next.js", "React", "TypeScript", "Tailwind CSS"],
+    category: "Mobile Engineering",
+    items: ["RESTful APIs", "Firebase", "Agile/Scrum", "SOLID Principles"],
   },
   {
-    category: "Tools & Practices",
-    items: ["Git", "Agile", "SOLID", "MVVM", "TDD"],
+    category: "Additional",
+    items: ["React Native", "Flutter", "React", "Python", "MySQL"],
   },
 ];
 
@@ -65,39 +76,80 @@ export default function ExperiencePage() {
             Experience
           </h1>
           <p className="text-muted-foreground">
-            My education and professional journey so far.
+            My professional journey and technical expertise.
           </p>
         </motion.div>
 
-        {/* Timeline */}
+        {/* Work Experience */}
         <motion.div variants={fadeUp} className="space-y-6">
-          {experiences.map((exp, index) => (
-            <div
-              key={index}
-              className="relative pl-6 border-l-2 border-border"
-            >
-              {/* Dot */}
-              <div className="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-blue-400 border-2 border-background" />
+          <h2 className="text-2xl font-bold tracking-tight">Work Experience</h2>
+          <div className="space-y-6">
+            {workExperience.map((exp, index) => (
+              <div
+                key={index}
+                className="relative pl-6 border-l-2 border-border"
+              >
+                {/* Dot */}
+                <div className="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-blue-400 border-2 border-background" />
 
-              <div className="space-y-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-accent text-accent-foreground">
-                    {exp.type === "education" ? "Education" : "Work"}
-                  </span>
-                  <span className="text-xs text-muted-foreground">
-                    {exp.period}
-                  </span>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-accent text-accent-foreground">
+                      Work
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {exp.period}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold font-sans">{exp.title}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {exp.organization}
+                  </p>
+                  <ul className="text-sm text-muted-foreground leading-relaxed mt-2 space-y-1.5 list-disc list-outside ml-4 marker:text-muted-foreground/60">
+                    {exp.highlights.map((highlight, hIdx) => (
+                      <li key={hIdx} className="pl-1">
+                        {highlight}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <h3 className="text-lg font-semibold font-sans">{exp.title}</h3>
-                <p className="text-sm text-muted-foreground">
-                  {exp.organization}
-                </p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {exp.description}
-                </p>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
+        </motion.div>
+
+        {/* Education */}
+        <motion.div variants={fadeUp} className="space-y-6">
+          <h2 className="text-2xl font-bold tracking-tight">Education</h2>
+          <div className="space-y-6">
+            {education.map((exp, index) => (
+              <div
+                key={index}
+                className="relative pl-6 border-l-2 border-border"
+              >
+                {/* Dot */}
+                <div className="absolute -left-[7px] top-1.5 w-3 h-3 rounded-full bg-blue-400 border-2 border-background" />
+
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-accent text-accent-foreground">
+                      Education
+                    </span>
+                    <span className="text-xs text-muted-foreground">
+                      {exp.period}
+                    </span>
+                  </div>
+                  <h3 className="text-lg font-semibold font-sans">{exp.title}</h3>
+                  <p className="text-sm text-muted-foreground">
+                    {exp.organization}
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed mt-1">
+                    {exp.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Skills */}
@@ -107,7 +159,7 @@ export default function ExperiencePage() {
             {skills.map((group) => (
               <div
                 key={group.category}
-                className="rounded-xl border border-border bg-card/50 backdrop-blur-sm p-4 space-y-3"
+                className="rounded-xl border border-border bg-card/50 backdrop-blur-sm p-4 space-y-3 hover:border-blue-400/30 transition-colors"
               >
                 <h4 className="text-sm font-semibold text-foreground font-sans">
                   {group.category}
@@ -125,28 +177,6 @@ export default function ExperiencePage() {
               </div>
             ))}
           </div>
-        </motion.div>
-
-        {/* About — original text preserved */}
-        <motion.div variants={fadeUp} className="space-y-3">
-          <h2 className="text-2xl font-bold tracking-tight">About</h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Aspiring iOS Developer, BackEnd Developer, and Mobile Developer with
-            a strong foundation in software engineering and hands-on experience
-            in building mobile and web applications. Proficient in iOS
-            technologies such as Swift and SwiftUI, backend development with PHP
-            and Laravel, and cross-platform mobile development using Flutter.
-          </p>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Adept at implementing RESTful APIs for seamless data integration and
-            applying Agile methodologies alongside SOLID principles to create
-            scalable, maintainable applications. With proven problem-solving
-            skills, I excel in managing and delivering projects efficiently.
-            Currently pursuing a Bachelor&apos;s in Computer Science with a focus
-            on Software Engineering, maintaining a 3.79 GPA. I am seeking an
-            internship opportunity to contribute my expertise in iOS, backend, or
-            mobile development to dynamic and innovative teams.
-          </p>
         </motion.div>
       </motion.div>
     </main>

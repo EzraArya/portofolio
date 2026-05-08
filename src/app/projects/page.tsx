@@ -5,38 +5,24 @@ import { motion } from "framer-motion";
 // NOTE: Project data preserved from original — may need updating later
 const projects = [
   {
-    title: "Portfolio Website",
+    title: "Sign Quest - Sign Language Learning App",
     description:
-      "A portfolio website built using Next.js, Tailwind CSS, and Framer Motion with a liquid glass floating navigation bar.",
-    tech: ["Next.js", "Tailwind CSS", "Framer Motion"],
-    github: "https://github.com/EzraArya/portofolio",
-  },
-  {
-    title: "LapangPedia",
-    description:
-      "A project I worked on with my team, where I was responsible as a full-stack developer. It's an auction website using Laravel, MySQL, Tailwind, and Bootstrap.",
-    tech: ["Laravel", "MySQL", "Tailwind CSS", "Bootstrap"],
-    github: "https://github.com/EzraArya/lapangpedia-web",
-  },
-  {
-    title: "Hackathon Website",
-    description:
-      "A project where I was the back-end developer, configuring the admin role. It's a Hackathon website built using Laravel.",
-    tech: ["Laravel", "PHP", "MySQL"],
-    github: "https://github.com/EzraArya/ProjectTpm/",
+      "An iOS app built using SwiftUI and Core ML to perform real-time sign language gesture recognition via the device camera using a YOLO-based model. Features Firebase Authentication and Firestore for progress tracking.",
+    tech: ["SwiftUI", "Core ML", "Firebase", "MVVM", "SPM"],
+    github: "https://github.com/EzraArya/Sign-Quest",
   },
   {
     title: "iOS Game Catalog",
     description:
-      "An iOS Game Catalog that uses SwiftUI and Rawg.io API allowing users to see list of games, developers, and creators and add items to the favorites list.",
-    tech: ["Swift", "SwiftUI", "REST API"],
+      "An iOS Game Catalog that uses SwiftUI and the RAWG.io API, allowing users to browse games, view developers, and save favorites locally using Core Data.",
+    tech: ["SwiftUI", "Core Data", "REST API", "MVVM"],
     github: "https://github.com/EzraArya/iOS-GameCatalog",
   },
   {
     title: "SIBI Sign Language Translator",
     description:
-      "A Flutter application that utilizes TFLite as the model to translate SIBI Sign Language in real-time using the device camera.",
-    tech: ["Flutter", "Dart", "TFLite", "ML"],
+      "A cross-platform Flutter application utilizing a custom TFLite model to translate SIBI Sign Language in real-time using the device camera.",
+    tech: ["Flutter", "Python", "TFLite"],
     github: "https://github.com/EzraArya/SIBI-Translator-Flutter",
   },
 ];
