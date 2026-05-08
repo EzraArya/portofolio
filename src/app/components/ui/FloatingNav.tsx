@@ -86,22 +86,19 @@ export function FloatingNav() {
                 />
               )}
               <span
-                className={`relative z-10 transition-transform duration-200 group-hover:scale-110 ${
-                  isActive
+                className={`relative z-10 transition-transform duration-200 group-hover:scale-110 ${isActive
                     ? "text-white"
                     : "text-white/50 dark:text-white/40 group-hover:text-white/80"
-                }`}
+                  }`}
               >
                 {item.icon}
               </span>
               <span
-                className={`relative z-10 hidden sm:block ${
-                  isActive
+                className={`relative z-10 hidden sm:block ${isActive
                     ? "text-white"
                     : "text-white/50 dark:text-white/40 group-hover:text-white/80"
-                }`}
+                  }`}
               >
-                {item.name}
               </span>
             </Link>
           );

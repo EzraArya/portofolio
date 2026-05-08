@@ -82,7 +82,7 @@ export function SakuraBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    const PETAL_COUNT = 50; // increased per user request
+    const PETAL_COUNT = 70; // increased per user request
 
     const handleResize = () => {
       canvas.width = window.innerWidth;
@@ -119,7 +119,7 @@ export function SakuraBackground() {
         const dx = petal.x - mouseRef.current.x;
         const dy = petal.y - mouseRef.current.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
-        
+
         if (distance < 120) {
           const force = (120 - distance) / 120;
           petal.speedX += (dx / distance) * force * 0.6;
@@ -134,7 +134,7 @@ export function SakuraBackground() {
         petal.swayPhase += petal.swaySpeed;
         petal.x += petal.speedX + Math.sin(petal.swayPhase) * 0.5;
         petal.y += petal.speedY;
-        
+
         // Spin faster if pushed
         const spinForce = Math.abs(petal.speedX - petal.baseSpeedX);
         petal.rotation += petal.rotationSpeed + spinForce * 0.05;
