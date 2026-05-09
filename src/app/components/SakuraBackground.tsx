@@ -174,7 +174,7 @@ export function SakuraBackground() {
     const initialCount = isMobileRef.current ? 15 : 50;
     for (let i = 0; i < initialCount; i++) {
       const p = createPetal(window.innerWidth);
-      p.y = Math.random() * window.innerHeight;
+      p.y = -20 - (i / initialCount) * window.innerHeight * 2;
       petalsRef.current.push(p);
     }
 
