@@ -7,11 +7,12 @@ import { useContext, useEffect, useRef, useState } from "react";
 
 function FrozenRouter(props: { children: React.ReactNode }) {
   const context = useContext(LayoutRouterContext);
-  const frozen = useRef(context).current;
+  const frozenContext = useRef(context).current;
+  const frozenChildren = useRef(props.children).current;
 
   return (
-    <LayoutRouterContext.Provider value={frozen}>
-      {props.children}
+    <LayoutRouterContext.Provider value={frozenContext}>
+      {frozenChildren}
     </LayoutRouterContext.Provider>
   );
 }

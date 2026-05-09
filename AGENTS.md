@@ -27,14 +27,15 @@ To prevent frame drops and visual lag during tab transitions on mobile, follow t
 ### 2. Layout Transitions (`layout-transition.tsx`)
 - Page transitions are wrapped with `AnimatePresence mode="wait"`. Keep durations short on mobile (e.g., `exit: 0.1s`, `enter: 0.15s`) to keep tab switching feeling snappy.
 - **Route Freezing**: Next.js unmounts page subtrees immediately on navigation. To allow exit animations, we wrap page children in a `FrozenRouter`. 
-- **React Concurrent Warning Fix**: Do not use dynamic route tracking state or custom `usePreviousValue` hooks inside `FrozenRouter` as they trigger React's concurrent rendering warning. Always use the robust `useRef(context).current` snapshot freeze pattern:
+- **React Concurrent Warning & Content Swap Fix**: Do not use dynamic route tracking state or custom `usePreviousValue` hooks inside `FrozenRouter` as they trigger React's concurrent rendering warning. Also, we must freeze the `children` prop using `useRef(props.children).current` so that exiting pages keep rendering their original content (instead of swapping to the new route content prematurely during the exit transition):
   ```tsx
   function FrozenRouter(props: { children: React.ReactNode }) {
     const context = useContext(LayoutRouterContext);
-    const frozen = useRef(context).current; // Snapshot-freezes context on mount
+    const frozenContext = useRef(context).current; // Snapshot-freezes context on mount
+    const frozenChildren = useRef(props.children).current; // Snapshot-freezes children on mount
     return (
-      <LayoutRouterContext.Provider value={frozen}>
-        {props.children}
+      <LayoutRouterContext.Provider value={frozenContext}>
+        {frozenChildren}
       </LayoutRouterContext.Provider>
     );
   }
