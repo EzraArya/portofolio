@@ -2,20 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { useContext, useEffect, useRef, useState } from "react";
-
-function FrozenRouter(props: { children: React.ReactNode }) {
-  const context = useContext(LayoutRouterContext);
-  const frozenContext = useRef(context).current;
-  const frozenChildren = useRef(props.children).current;
-
-  return (
-    <LayoutRouterContext.Provider value={frozenContext}>
-      {frozenChildren}
-    </LayoutRouterContext.Provider>
-  );
-}
+import { useEffect, useState } from "react";
 
 interface LayoutTransitionProps {
   children: React.ReactNode;
@@ -30,6 +17,10 @@ export function LayoutTransition({ children, className }: LayoutTransitionProps)
     setIsMobile(window.innerWidth < 768);
   }, []);
 
+  if (isMobile) {
+    return <div className={className}>{children}</div>;
+  }
+
   return (
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
@@ -38,14 +29,14 @@ export function LayoutTransition({ children, className }: LayoutTransitionProps)
         initial={{ opacity: 0 }}
         animate={{
           opacity: 1,
-          transition: { duration: isMobile ? 0.15 : 0.25, ease: "linear" },
+          transition: { duration: 0.25, ease: "linear" },
         }}
         exit={{
           opacity: 0,
-          transition: { duration: isMobile ? 0.1 : 0.15, ease: "linear" },
+          transition: { duration: 0.15, ease: "linear" },
         }}
       >
-        <FrozenRouter>{children}</FrozenRouter>
+        {children}
       </motion.div>
     </AnimatePresence>
   );

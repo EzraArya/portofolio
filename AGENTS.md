@@ -23,25 +23,13 @@ To prevent frame drops and visual lag during tab transitions on mobile, follow t
 - **Avoid Dynamic Allocations**: Do not call expensive Canvas API context states such as `ctx.createLinearGradient()` on every frame on mobile. Use solid fill fallbacks instead.
 - **Resolution Clamping**: Clamp `devicePixelRatio` to a maximum of `1.5` on mobile devices to prevent excessive pixel-fill work on high-density displays (e.g., 3x Retina screens).
 - **Visibility Pausing**: Always register a `visibilitychange` listener to completely pause rAF loops when the tab or browser goes into the background.
+- **CSS Pixel Coordinates System**: Always define physics boundaries, starting positions, and mouse distance checks using CSS pixel dimensions (`window.innerWidth` and `window.innerHeight`), rather than raw physical canvas pixels (`canvas.width` and `canvas.height`). Because the drawing context is scaled via `ctx.scale(dpr, dpr)`, using physical canvas dimensions causes coordinates to scale twice, shifting objects off-screen and breaking mouse physics completely on high-DPR screens.
 
 ### 2. Layout Transitions (`layout-transition.tsx`)
-- Page transitions are wrapped with `AnimatePresence mode="wait"`. Keep durations short on mobile (e.g., `exit: 0.1s`, `enter: 0.15s`) to keep tab switching feeling snappy.
+- **Mobile Native Bypass**: On mobile screens (under `768px`), bypass Framer Motion's `AnimatePresence` and context wrappers entirely after mounting, returning a plain `div` instead. This completely eliminates React unmount delays, context freezes, and animation rendering bottlenecks, delivering instantaneous, lag-free native page transitions.
 - **Keying by Pathname**: Always use `usePathname()` as the key for `motion.div` instead of `useSelectedLayoutSegment()`. This guarantees stable route keys across root `/` and subpages.
 - **Pure Opacity Fade**: Keep the wrapper transition limited to a pure `opacity` crossfade (`initial={{ opacity: 0 }}`, `animate={{ opacity: 1 }}`, `exit={{ opacity: 0 }}`). Do NOT animate `y` on the outer wrapper, as it conflicts with page-level staggered card `fadeUp` entry animations, causing double-animations and layout jitter.
-- **Route Freezing**: Next.js unmounts page subtrees immediately on navigation. To allow exit animations, we wrap page children in a `FrozenRouter`. 
-- **React Concurrent Warning & Content Swap Fix**: Do not use dynamic route tracking state or custom `usePreviousValue` hooks inside `FrozenRouter` as they trigger React's concurrent rendering warning. Also, we must freeze the `children` prop using `useRef(props.children).current` so that exiting pages keep rendering their original content (instead of swapping to the new route content prematurely during the exit transition):
-  ```tsx
-  function FrozenRouter(props: { children: React.ReactNode }) {
-    const context = useContext(LayoutRouterContext);
-    const frozenContext = useRef(context).current; // Snapshot-freezes context on mount
-    const frozenChildren = useRef(props.children).current; // Snapshot-freezes children on mount
-    return (
-      <LayoutRouterContext.Provider value={frozenContext}>
-        {frozenChildren}
-      </LayoutRouterContext.Provider>
-    );
-  }
-  ```
+- **No Context Freezing**: Do NOT use custom route-freezing wrappers or override the internal `LayoutRouterContext` provider in Next.js 14. Overriding or snapshot-freezing Next.js's internal router context is extremely fragile and blocks the asynchronous App Router from rendering subpages correctly on navigation, causing blank pages. Pass `children` directly inside the transition wrapper.
 
 ### 3. Compositing & Blend Overlays (`Spotlight.tsx`)
 - Full-screen effects with heavy layout blending (like `mix-blend-overlay` in Spotlight) should be **disabled completely on mobile** (return `null` or use `display: none` via `@media`).
