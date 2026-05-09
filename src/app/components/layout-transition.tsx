@@ -3,6 +3,11 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
 
+interface LayoutTransitionProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
 function getRouteKey(pathname: string): string {
   return pathname.split("?")[0].split("#")[0];
 }
