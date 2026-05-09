@@ -1,3 +1,7 @@
+type CubicBezier = [number, number, number, number];
+
+const easeOut: CubicBezier = [0.25, 0.46, 0.45, 0.94];
+
 export const stagger = {
   hidden: { opacity: 0 },
   visible: {
@@ -19,7 +23,7 @@ export const fadeUp = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.5, ease: easeOut },
   },
 };
 
@@ -28,6 +32,6 @@ export const fadeUpLarge = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
+    transition: { duration: 0.5, ease: easeOut },
   },
 };
