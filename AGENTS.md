@@ -26,6 +26,8 @@ To prevent frame drops and visual lag during tab transitions on mobile, follow t
 
 ### 2. Layout Transitions (`layout-transition.tsx`)
 - Page transitions are wrapped with `AnimatePresence mode="wait"`. Keep durations short on mobile (e.g., `exit: 0.1s`, `enter: 0.15s`) to keep tab switching feeling snappy.
+- **Keying by Pathname**: Always use `usePathname()` as the key for `motion.div` instead of `useSelectedLayoutSegment()`. This guarantees stable route keys across root `/` and subpages.
+- **Pure Opacity Fade**: Keep the wrapper transition limited to a pure `opacity` crossfade (`initial={{ opacity: 0 }}`, `animate={{ opacity: 1 }}`, `exit={{ opacity: 0 }}`). Do NOT animate `y` on the outer wrapper, as it conflicts with page-level staggered card `fadeUp` entry animations, causing double-animations and layout jitter.
 - **Route Freezing**: Next.js unmounts page subtrees immediately on navigation. To allow exit animations, we wrap page children in a `FrozenRouter`. 
 - **React Concurrent Warning & Content Swap Fix**: Do not use dynamic route tracking state or custom `usePreviousValue` hooks inside `FrozenRouter` as they trigger React's concurrent rendering warning. Also, we must freeze the `children` prop using `useRef(props.children).current` so that exiting pages keep rendering their original content (instead of swapping to the new route content prematurely during the exit transition):
   ```tsx

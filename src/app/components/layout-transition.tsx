@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import { useContext, useEffect, useRef, useState } from "react";
 
@@ -23,7 +23,7 @@ interface LayoutTransitionProps {
 }
 
 export function LayoutTransition({ children, className }: LayoutTransitionProps) {
-  const segment = useSelectedLayoutSegment();
+  const pathname = usePathname();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -34,17 +34,15 @@ export function LayoutTransition({ children, className }: LayoutTransitionProps)
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
         className={className}
-        key={segment}
-        initial={{ opacity: 0, y: isMobile ? 4 : 8 }}
+        key={pathname}
+        initial={{ opacity: 0 }}
         animate={{
           opacity: 1,
-          y: 0,
-          transition: { duration: isMobile ? 0.15 : 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
+          transition: { duration: isMobile ? 0.15 : 0.25, ease: "linear" },
         }}
         exit={{
           opacity: 0,
-          y: isMobile ? -4 : -8,
-          transition: { duration: isMobile ? 0.1 : 0.2, ease: [0.25, 0.46, 0.45, 0.94] },
+          transition: { duration: isMobile ? 0.1 : 0.15, ease: "linear" },
         }}
       >
         <FrozenRouter>{children}</FrozenRouter>
