@@ -45,7 +45,7 @@ export function SakuraBackground() {
   }, []);
 
   const drawPetal = useCallback(
-    (ctx: CanvasRenderingContext2D, petal: Petal, isDark: boolean) => {
+    (ctx: CanvasRenderingContext2D, petal: Petal, isDark: boolean, isMobile: boolean) => {
       ctx.save();
       ctx.translate(petal.x, petal.y);
       ctx.rotate(petal.rotation);
@@ -57,15 +57,18 @@ export function SakuraBackground() {
       ctx.bezierCurveTo(s * 0.3, -s * 0.4, s * 0.8, -s * 0.3, s, 0);
       ctx.bezierCurveTo(s * 0.8, s * 0.3, s * 0.3, s * 0.4, 0, 0);
 
-      if (isDark) {
-        const gradient = ctx.createLinearGradient(0, -s * 0.4, s, s * 0.4);
-        gradient.addColorStop(0, "rgba(255, 183, 197, 0.9)");
-        gradient.addColorStop(1, "rgba(255, 140, 162, 0.7)");
-        ctx.fillStyle = gradient;
+      if (isMobile) {
+        // High-performance flat fill on mobile to avoid expensive gradient allocations per frame
+        ctx.fillStyle = isDark ? "rgba(255, 160, 180, 0.9)" : "rgba(255, 120, 150, 0.8)";
       } else {
         const gradient = ctx.createLinearGradient(0, -s * 0.4, s, s * 0.4);
-        gradient.addColorStop(0, "rgba(255, 150, 170, 0.8)");
-        gradient.addColorStop(1, "rgba(255, 105, 135, 0.6)");
+        if (isDark) {
+          gradient.addColorStop(0, "rgba(255, 183, 197, 0.9)");
+          gradient.addColorStop(1, "rgba(255, 140, 162, 0.7)");
+        } else {
+          gradient.addColorStop(0, "rgba(255, 150, 170, 0.8)");
+          gradient.addColorStop(1, "rgba(255, 105, 135, 0.6)");
+        }
         ctx.fillStyle = gradient;
       }
 
@@ -86,14 +89,18 @@ export function SakuraBackground() {
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: true });
     if (!ctx) return;
 
-    const PETAL_COUNT = 50; // increased per user request
+    const isMobile = window.innerWidth < 768;
+    const PETAL_COUNT = isMobile ? 15 : 50;
 
     const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+      // Clamp DPR to reduce the number of pixels to render on high-res mobile devices
+      const dpr = Math.min(window.devicePixelRatio || 1, isMobile ? 1.5 : 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      ctx.scale(dpr, dpr);
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -106,34 +113,43 @@ export function SakuraBackground() {
 
     handleResize();
     window.addEventListener("resize", handleResize);
-    window.addEventListener("mousemove", handleMouseMove);
-    document.body.addEventListener("mouseleave", handleMouseLeave);
+    
+    if (!isMobile) {
+      window.addEventListener("mousemove", handleMouseMove);
+      document.body.addEventListener("mouseleave", handleMouseLeave);
+    }
 
     petalsRef.current = [];
     for (let i = 0; i < PETAL_COUNT; i++) {
       const petal = createPetal(canvas);
-      petal.y = Math.random() * canvas.height;
+      petal.y = Math.random() * (canvas.height / (isMobile ? 1.5 : 2)); // Adjust starting height
       petalsRef.current.push(petal);
     }
 
+    let isPaused = false;
+
     const animate = () => {
+      if (isPaused) return;
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       petalsRef.current.forEach((petal) => {
-        // Mouse interaction
-        const dx = petal.x - mouseRef.current.x;
-        const dy = petal.y - mouseRef.current.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
+        // Skip mouse calculation completely on mobile
+        if (!isMobile) {
+          const dx = petal.x - mouseRef.current.x;
+          const dy = petal.y - mouseRef.current.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance < 120) {
-          const force = (120 - distance) / 120;
-          petal.speedX += (dx / distance) * force * 0.6;
-          petal.speedY += (dy / distance) * force * 0.6;
+          if (distance < 120) {
+            const force = (120 - distance) / 120;
+            petal.speedX += (dx / distance) * force * 0.6;
+            petal.speedY += (dy / distance) * force * 0.6;
+          }
+
+          // Friction towards base speed
+          petal.speedX += (petal.baseSpeedX - petal.speedX) * 0.05;
+          petal.speedY += (petal.baseSpeedY - petal.speedY) * 0.05;
         }
-
-        // Friction towards base speed
-        petal.speedX += (petal.baseSpeedX - petal.speedX) * 0.05;
-        petal.speedY += (petal.baseSpeedY - petal.speedY) * 0.05;
 
         // Update position
         petal.swayPhase += petal.swaySpeed;
@@ -142,28 +158,48 @@ export function SakuraBackground() {
 
         // Spin faster if pushed
         const spinForce = Math.abs(petal.speedX - petal.baseSpeedX);
-        petal.rotation += petal.rotationSpeed + spinForce * 0.05;
+        petal.rotation += petal.rotationSpeed + (isMobile ? 0 : spinForce * 0.05);
 
-        if (petal.y > canvas.height + 20 || petal.x < -50 || petal.x > canvas.width + 50) {
-          petal.x = Math.random() * canvas.width;
+        // Reset if offscreen
+        const resetMargin = 20;
+        const currentWidth = canvas.width / (isMobile ? 1.5 : 2);
+        const currentHeight = canvas.height / (isMobile ? 1.5 : 2);
+
+        if (petal.y > currentHeight + resetMargin || petal.x < -50 || petal.x > currentWidth + 50) {
+          petal.x = Math.random() * currentWidth;
           petal.y = -20 - Math.random() * 40;
           petal.opacity = 0.15 + Math.random() * 0.25;
           petal.speedX = petal.baseSpeedX;
           petal.speedY = petal.baseSpeedY;
         }
 
-        drawPetal(ctx, petal, isDarkRef.current);
+        drawPetal(ctx, petal, isDarkRef.current, isMobile);
       });
 
       animationRef.current = requestAnimationFrame(animate);
     };
 
+    // Pause when tab/app goes background to save battery & CPU cycles
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        isPaused = true;
+        cancelAnimationFrame(animationRef.current);
+      } else {
+        isPaused = false;
+        animate();
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     animate();
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", handleMouseMove);
-      document.body.removeEventListener("mouseleave", handleMouseLeave);
+      if (!isMobile) {
+        window.removeEventListener("mousemove", handleMouseMove);
+        document.body.removeEventListener("mouseleave", handleMouseLeave);
+      }
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
       cancelAnimationFrame(animationRef.current);
     };
   }, [createPetal, drawPetal]);

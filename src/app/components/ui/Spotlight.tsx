@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTheme } from "next-themes";
 import { motion, useMotionTemplate, useMotionValue, useSpring } from "framer-motion";
 
 export function Spotlight() {
+  const [isMobile, setIsMobile] = useState(false);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
@@ -15,6 +16,9 @@ export function Spotlight() {
   const { theme } = useTheme();
   
   useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+    if (window.innerWidth < 768) return;
+
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -23,6 +27,8 @@ export function Spotlight() {
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
+
+  if (isMobile) return null;
 
   const isDark = theme === "dark";
 

@@ -87,13 +87,17 @@
     transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out;
   }
   
-  /* Scoped theme transitions — only on elements that need it */
-  body,
-  nav,
-  [class*="rounded-"],
-  [class*="border-"],
-  [class*="bg-"] {
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+  /* Scoped theme transitions — only on elements that need it, optimized for mobile */
+  @media (min-width: 768px) {
+    body,
+    nav {
+      transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+    }
+  }
+  @media (max-width: 767px) {
+    body {
+      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+    }
   }
 
   /* Typography hierarchy — technical heading font, sans for body */
@@ -144,5 +148,26 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* High-performance mobile overrides: disable expensive backdrop-blurs on content cards below 768px */
+@media (max-width: 767px) {
+  .backdrop-blur-sm,
+  .backdrop-blur-md,
+  .backdrop-blur {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  
+  /* Increase card opacity slightly on mobile to maintain contrast without blur */
+  .bg-card\/50 {
+    background-color: hsl(var(--card) / 0.85) !important;
+  }
+  .bg-black\/\[0\.03\] {
+    background-color: rgba(0, 0, 0, 0.06) !important;
+  }
+  .dark .bg-white\/\[0\.02\] {
+    background-color: rgba(255, 255, 255, 0.05) !important;
   }
 }

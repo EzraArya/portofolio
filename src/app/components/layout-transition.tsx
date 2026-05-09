@@ -3,35 +3,14 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useSelectedLayoutSegment } from "next/navigation";
 import { LayoutRouterContext } from "next/dist/shared/lib/app-router-context.shared-runtime";
-import { useContext, useEffect, useRef } from "react";
-
-function usePreviousValue<T>(value: T): T | undefined {
-  const prevValue = useRef<T | undefined>(undefined);
-
-  useEffect(() => {
-    prevValue.current = value;
-    return () => {
-      prevValue.current = undefined;
-    };
-  });
-
-  return prevValue.current;
-}
+import { useContext, useEffect, useRef, useState } from "react";
 
 function FrozenRouter(props: { children: React.ReactNode }) {
   const context = useContext(LayoutRouterContext);
-  const prevContext = usePreviousValue(context) || context;
-
-  const segment = useSelectedLayoutSegment();
-  const prevSegment = usePreviousValue(segment);
-
-  const changed =
-    segment !== prevSegment &&
-    segment !== undefined &&
-    prevSegment !== undefined;
+  const frozen = useRef(context).current;
 
   return (
-    <LayoutRouterContext.Provider value={changed ? prevContext : context}>
+    <LayoutRouterContext.Provider value={frozen}>
       {props.children}
     </LayoutRouterContext.Provider>
   );
@@ -44,22 +23,27 @@ interface LayoutTransitionProps {
 
 export function LayoutTransition({ children, className }: LayoutTransitionProps) {
   const segment = useSelectedLayoutSegment();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
 
   return (
     <AnimatePresence mode="wait" initial={false}>
       <motion.div
         className={className}
         key={segment}
-        initial={{ opacity: 0, y: 8 }}
+        initial={{ opacity: 0, y: isMobile ? 4 : 8 }}
         animate={{
           opacity: 1,
           y: 0,
-          transition: { duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
+          transition: { duration: isMobile ? 0.15 : 0.3, ease: [0.25, 0.46, 0.45, 0.94] },
         }}
         exit={{
           opacity: 0,
-          y: -8,
-          transition: { duration: 0.2, ease: [0.25, 0.46, 0.45, 0.94] },
+          y: isMobile ? -4 : -8,
+          transition: { duration: isMobile ? 0.1 : 0.2, ease: [0.25, 0.46, 0.45, 0.94] },
         }}
       >
         <FrozenRouter>{children}</FrozenRouter>
