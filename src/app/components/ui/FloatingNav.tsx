@@ -114,7 +114,7 @@ export function FloatingNav() {
               {isActive && (
                 <motion.div
                   layoutId="activeTab"
-                  className="absolute inset-0 bg-white/[0.12] dark:bg-white/[0.1] rounded-full"
+                  className="absolute inset-0 bg-black/[0.08] dark:bg-white/[0.1] rounded-full"
                   transition={{
                     // Fix: slightly crisper spring for snappier indicator movement
                     type: "spring",
@@ -125,8 +125,8 @@ export function FloatingNav() {
               )}
               <span
                 className={`relative z-10 transition-transform duration-200 group-hover:scale-110 ${isActive
-                    ? "text-white dark:text-white"
-                    : "text-black/50 dark:text-white/40 group-hover:text-black/80 dark:group-hover:text-white/80"
+                  ? "text-black dark:text-white"
+                  : "text-black/50 dark:text-white/40 group-hover:text-black/80 dark:group-hover:text-white/80"
                   }`}
               >
                 {item.icon}
@@ -134,8 +134,8 @@ export function FloatingNav() {
               {/* Fix: restored label text, was empty in original */}
               <span
                 className={`relative z-10 hidden sm:block ${isActive
-                    ? "text-white dark:text-white"
-                    : "text-black/50 dark:text-white/40 group-hover:text-black/80 dark:group-hover:text-white/80"
+                  ? "text-black dark:text-white"
+                  : "text-black/50 dark:text-white/40 group-hover:text-black/80 dark:group-hover:text-white/80"
                   }`}
               >
                 {item.name}
