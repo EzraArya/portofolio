@@ -28,6 +28,8 @@ export function Spotlight() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [mouseX, mouseY]);
 
+  const background = useMotionTemplate`radial-gradient(600px circle at ${springX}px ${springY}px, rgba(255,255,255,0.08), transparent 40%)`;
+
   if (isMobile) return null;
 
   const isDark = theme === "dark";
@@ -37,7 +39,7 @@ export function Spotlight() {
       className="pointer-events-none fixed inset-0 z-30 mix-blend-overlay transition-opacity duration-500"
       style={{
         opacity: isDark ? 1 : 0,
-        background: useMotionTemplate`radial-gradient(600px circle at ${springX}px ${springY}px, rgba(255,255,255,0.08), transparent 40%)`
+        background
       }}
       aria-hidden="true"
     />
