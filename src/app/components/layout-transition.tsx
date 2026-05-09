@@ -2,38 +2,39 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
 
-interface LayoutTransitionProps {
-  children: React.ReactNode;
-  className?: string;
+function getRouteKey(pathname: string): string {
+  return pathname.split("?")[0].split("#")[0];
 }
 
 export function LayoutTransition({ children, className }: LayoutTransitionProps) {
   const pathname = usePathname();
-  const [isMobile, setIsMobile] = useState(false);
+  const routeKey = getRouteKey(pathname);
 
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
-
-  if (isMobile) {
-    return <div className={className}>{children}</div>;
-  }
+  // Lighter animation for mobile — no y shift, shorter duration
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode={isMobile ? "wait" : "sync"}>
       <motion.div
+        key={routeKey}
         className={className}
-        key={pathname}
-        initial={{ opacity: 0 }}
+        initial={{ opacity: 0, y: isMobile ? 0 : 6 }}
         animate={{
           opacity: 1,
-          transition: { duration: 0.25, ease: "linear" },
+          y: 0,
+          transition: {
+            duration: isMobile ? 0.15 : 0.25,
+            ease: "easeOut",
+          },
         }}
         exit={{
           opacity: 0,
-          transition: { duration: 0.15, ease: "linear" },
+          y: isMobile ? 0 : -4,
+          transition: {
+            duration: isMobile ? 0.1 : 0.15,
+            ease: "easeIn",
+          },
         }}
       >
         {children}
